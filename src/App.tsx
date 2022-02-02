@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import Posts from "./components/Posts";
+import { Post } from "./types";
 
-function App() {
+const App = () => {
+  const [appState, setAppState] = useState<{
+    loading: Boolean;
+    posts: never[] | Post[];
+  }>({
+    loading: false,
+    posts: [],
+  });
+
+  useEffect(() => {
+    setAppState({ ...appState, loading: true });
+    const apiUrl = "http://localhost:8000/api/";
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => setAppState({ loading: false, posts: data }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container mx-auto mb-5 flex flex-col items-center">
+      <h1 className="text-3xl font-bold mb-10">Latest Posts</h1>
+      <Posts isLoading={appState.loading} posts={appState.posts} />
     </div>
   );
-}
+};
 
 export default App;
