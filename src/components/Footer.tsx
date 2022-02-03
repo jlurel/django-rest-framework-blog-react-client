@@ -20,7 +20,7 @@ const footers = [
 
 const Footer = () => {
   return (
-    <div className="md:container mx-auto py-2 flex flex-col items-center border-t border-slate-300">
+    <div className="absolute bottom-0 left-0 right-0 h-48 md:container mx-auto py-2 flex flex-col items-center border-t border-slate-300">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-1">
         {footers.map((footer) => (
           <div className="mx-5" key={footer.title}>

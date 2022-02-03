@@ -6,6 +6,7 @@ export interface Post {
   content: string;
   status: "published";
   category: number;
+  slug: string;
 }
 
 export interface RegisterFormData {
