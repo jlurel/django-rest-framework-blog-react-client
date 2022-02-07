@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import Logout from "./components/Logout";
 import Post from "./components/Post";
 import Layout from "./components/Layout";
+import Search from "./components/Search";
 
 const routing = (
   <React.StrictMode>
@@ -20,6 +21,7 @@ const routing = (
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/:slug" element={<Post />} />
+          <Route path="/search" element={<Search />} />
         </Routes>
       </Layout>
     </Router>
