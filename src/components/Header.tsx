@@ -1,10 +1,12 @@
-import { KeyboardEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { KeyboardEvent, useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
+import UserContext from "../context/UserContext";
 
 const Header = () => {
   const navigate = useNavigate();
   const [searchTerms, setSearchTerms] = useState<string>("");
+  const userContext = useContext(UserContext);
 
   const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
@@ -43,27 +45,30 @@ const Header = () => {
           <FaSearch />
         </button>
       </div>
-      <nav>
-        {localStorage.getItem("access_token") === null ? (
+      <nav className="md:ml-5">
+        {userContext?.user === null ? (
           <>
-            <a
-              href="/register"
+            <Link
+              to="/register"
               className="visited:no-underline visited:text-white"
             >
               Register
-            </a>
-            <a href="/login">
+            </Link>
+            <Link to="/login">
               <button className="p-2 mx-2 rounded border border-slate-500 hover:bg-slate-500">
                 Login
               </button>
-            </a>
+            </Link>
           </>
         ) : (
-          <a href="/logout">
-            <button className="p-2 mx-2 rounded border border-slate-500 hover:bg-slate-500">
-              Logout
-            </button>
-          </a>
+          <>
+            <Link to={`/account`}>Account</Link>
+            <Link to={`/logout`}>
+              <button className="p-2 mx-2 rounded border border-slate-500 hover:bg-slate-500">
+                Logout
+              </button>
+            </Link>
+          </>
         )}
       </nav>
     </div>

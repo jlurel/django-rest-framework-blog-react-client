@@ -10,20 +10,25 @@ import Logout from "./components/Logout";
 import Post from "./components/Post";
 import Layout from "./components/Layout";
 import Search from "./components/Search";
+import UserProfile from "./components/UserProfile";
+import { UserContextProvider } from "./context/UserContext";
 
 const routing = (
   <React.StrictMode>
     <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/:slug" element={<Post />} />
-          <Route path="/search" element={<Search />} />
-        </Routes>
-      </Layout>
+      <UserContextProvider>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/:slug" element={<Post />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/account" element={<UserProfile />} />
+          </Routes>
+        </Layout>
+      </UserContextProvider>
     </Router>
   </React.StrictMode>
 );

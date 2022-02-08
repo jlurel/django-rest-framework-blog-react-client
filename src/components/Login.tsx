@@ -1,16 +1,21 @@
-import { ChangeEvent, SyntheticEvent, useState } from "react";
+import { ChangeEvent, SyntheticEvent, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axios";
-import { LoginFormData } from "../types";
+import { LoginFormDataType } from "../types";
 import { FaUser } from "react-icons/fa";
+import UserContext from "../context/UserContext";
 
 const Login = () => {
   const navigate = useNavigate();
-  const initialFormData = Object.freeze<LoginFormData>({
+
+  const userContext = useContext(UserContext);
+
+  const initialFormData = Object.freeze<LoginFormDataType>({
     email: "",
     password: "",
   });
-  const [formData, setFormData] = useState<LoginFormData>(initialFormData);
+
+  const [formData, setFormData] = useState<LoginFormDataType>(initialFormData);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
@@ -19,19 +24,29 @@ const Login = () => {
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     axiosInstance
-      .post(`token/`, {
+      .post(`user/login/`, {
         email: formData.email,
         password: formData.password,
       })
       .then((response) => {
         localStorage.setItem("access_token", response.data.access);
         localStorage.setItem("refresh_token", response.data.refresh);
-        axiosInstance.defaults.headers.common["Authorization"] =
-          "JWT " + localStorage.getItem("access_token");
-        navigate(`/`);
-        console.log(response);
+      })
+      .then(() => {
+        getUserInfo();
+        navigate("/");
       });
   };
+
+  const getUserInfo = () => {
+    axiosInstance
+      .get("user/")
+      .then((response) => {
+        userContext?.setUser(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <div className="container mx-auto">
       <div className="flex flex-col p-2 items-center">
@@ -45,7 +60,7 @@ const Login = () => {
               Email address
             </label>
             <input
-              className="form-input w-full rounded border border-slate-400"
+              className="form-input w-full rounded border border-slate-400 text-black"
               id="email"
               name="email"
               type="email"
@@ -59,7 +74,7 @@ const Login = () => {
               Password
             </label>
             <input
-              className="form-input w-full rounded border border-slate-400"
+              className="form-input w-full rounded border border-slate-400 text-black"
               id="password"
               name="password"
               type="password"

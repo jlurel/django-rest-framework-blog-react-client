@@ -1,17 +1,18 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axios";
-import { RegisterFormData } from "../types";
+import { RegisterFormDataType } from "../types";
 import { FaUser } from "react-icons/fa";
 
 const Register = () => {
   const navigate = useNavigate();
-  const initialFormData = Object.freeze<RegisterFormData>({
+  const initialFormData = Object.freeze<RegisterFormDataType>({
     email: "",
     username: "",
     password: "",
   });
-  const [formData, setFormData] = useState<RegisterFormData>(initialFormData);
+  const [formData, setFormData] =
+    useState<RegisterFormDataType>(initialFormData);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
@@ -43,7 +44,7 @@ const Register = () => {
               Email address
             </label>
             <input
-              className="form-input w-full rounded border border-slate-400"
+              className="form-input w-full rounded border border-slate-400 text-black"
               id="email"
               name="email"
               type="email"
@@ -57,7 +58,7 @@ const Register = () => {
               Username
             </label>
             <input
-              className="form-input w-full rounded border border-slate-400"
+              className="form-input w-full rounded border border-slate-400 text-black"
               id="username"
               name="username"
               type="text"
@@ -71,7 +72,7 @@ const Register = () => {
               Password
             </label>
             <input
-              className="form-input w-full rounded border border-slate-400"
+              className="form-input w-full rounded border border-slate-400 text-black"
               id="password"
               name="password"
               type="password"

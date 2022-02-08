@@ -13,7 +13,7 @@ const Posts = ({
   return (
     <div className="container">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-        {posts.map(({ id, title, excerpt, slug }) => (
+        {posts?.map(({ id, title, excerpt, slug }) => (
           <Link to={`/${slug}`} key={id}>
             <div className="flex flex-col w-[380px] mx-5 rounded-lg shadow-lg shadow-black">
               <div className="h-[250px] w-[380px] bg-cover bg-[url(https://source.unsplash.com/random)] rounded-lg"></div>

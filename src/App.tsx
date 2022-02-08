@@ -13,12 +13,11 @@ const App = () => {
 
   useEffect(() => {
     setAppState({ ...appState, loading: true });
-    const apiUrl = "http://localhost:8000/api/";
+    const apiUrl = "http://localhost:8000/api/posts/";
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
         setAppState({ loading: false, posts: data });
-        console.log(data);
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
