@@ -1,50 +1,84 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from 'react';
 
-export interface Post {
+export type SetValue<T> = Dispatch<SetStateAction<T>>;
+export type StatusType = 'published' | 'draft';
+
+export interface AuthorInterface {
   id: number;
-  author: AuthorType;
+  about: string;
+  email: string;
+  firstname: string;
+  username: string;
+}
+
+export interface CategoryInterface {
+  id: number;
+  name: string;
+}
+
+export interface PostInterface {
+  id: number;
+  author: AuthorInterface;
   title: string;
   excerpt: string;
   content: string;
-  status: "published";
-  category: CategoryType;
+  status: StatusType;
+  category: CategoryInterface;
   slug: string;
+  image: string;
 }
 
-export type AuthorType = {
-  about: string;
-  email: string;
-  firstname: string;
-  username: string;
-};
+export interface PostFormDataInterface {
+  title: string;
+  slug: string;
+  excerpt: string;
+  content?: string;
+  category: number;
+  status: StatusType;
+  image: File | string | null;
+}
 
-export type CategoryType = {
-  name: string;
-};
-
-export type RegisterFormDataType = {
+export interface RegisterFormDataInterface {
   email: string;
   username: string;
   password: string;
-};
+}
 
-export type LoginFormDataType = {
+export interface LoginFormDataInterface {
   email: string;
   password: string;
-};
+}
 
-export type AuthUserType = {
+export interface AuthUserInterface {
   email: string;
   username: string;
   firstname: string;
   about: string;
-};
+  id: number;
+}
 
-export type UserContextType = {
-  user: AuthUserType | null;
-  setUser: Dispatch<SetStateAction<AuthUserType | null>>;
-};
+export interface UserContextInterface {
+  user: AuthUserInterface | null;
+  setUser: SetValue<null> | Dispatch<SetStateAction<AuthUserInterface | null>>;
+  login: () => void;
+  logout: () => void;
+}
 
-export type UserContextProviderPropsType = {
+export interface ThemeContextInterface {
+  isDark: boolean;
+  toggleBlackTheme: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface SearchContextInterface {
+  searchTerms: string;
+  setSearchTerms: Dispatch<SetStateAction<string>>;
+}
+
+export interface ChildrenProps {
   children: JSX.Element;
-};
+}
+
+export interface PostsComponentProps {
+  isLoading: boolean;
+  posts: PostInterface[] | never[];
+}

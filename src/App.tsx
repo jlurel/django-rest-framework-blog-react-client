@@ -1,32 +1,50 @@
-import { useEffect, useState } from "react";
-import Posts from "./components/Posts";
-import { Post } from "./types";
+import React, { useEffect, useState } from 'react';
+import Posts from './components/Posts';
+import { useSearchContext } from './context/SearchContext';
+import { PostInterface } from './types';
 
 const App = () => {
-  const [appState, setAppState] = useState<{
-    loading: Boolean;
-    posts: never[] | Post[];
-  }>({
-    loading: false,
-    posts: [],
-  });
+  const { searchTerms } = useSearchContext();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [posts, setPosts] = useState<PostInterface[] | never[]>([]);
 
-  useEffect(() => {
-    setAppState({ ...appState, loading: true });
-    const apiUrl = "http://localhost:8000/api/posts/";
-    fetch(apiUrl)
+  const getPosts = () => {
+    setLoading(true);
+    fetch(`http://localhost:8000/api/posts`)
       .then((response) => response.json())
       .then((data) => {
-        setAppState({ loading: false, posts: data });
+        setLoading(false);
+        setPosts(data);
+        console.log(data);
       });
+  };
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  const searchPostsWithTerms = () => {
+    setLoading(true);
+    fetch(`http://localhost:8000/api/posts?search=${searchTerms}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setLoading(false);
+        setPosts(data);
+      });
+  };
+
+  useEffect(() => {
+    getPosts();
   }, []);
+
+  useEffect(() => {
+    if (searchTerms.length === 0 || searchTerms.trim() === '') {
+      getPosts();
+    } else {
+      searchPostsWithTerms();
+    }
+  }, [searchTerms]);
 
   return (
     <div className="container mx-auto mb-5 flex flex-col items-center">
       <h1 className="text-3xl font-bold mb-10">Latest Posts</h1>
-      <Posts isLoading={appState.loading} posts={appState.posts} />
+      <Posts isLoading={loading} posts={posts} />
     </div>
   );
 };

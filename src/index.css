@@ -1,3 +1,43 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import 'react-quill/dist/quill.snow.css';
+
+@layer base {
+  h1 {
+    @apply text-2xl;
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  h3 {
+    @apply text-lg;
+  }
+}
+
+
+
+.dark .quill {
+  background-color: rgb(51 65 85 / 1);
+}
+
+.dark .ql-snow .ql-picker {
+  color: white;
+}
+
+.dark .ql-snow .ql-fill,
+.dark .ql-snow .ql-stroke.ql-fill {
+  fill: white;
+}
+
+.dark .ql-snow .ql-stroke,
+.dark .ql-snow .ql-stroke-miter {
+  stroke: white;
+}
+
+.dark .ql-snow .ql-picker-options {
+  background-color: rgb(30 41 59 / 1);
+}

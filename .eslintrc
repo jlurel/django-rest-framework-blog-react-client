@@ -1,0 +1,36 @@
+{
+  "root": true,
+  "env": { "browser": true, "es6": true },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": { "jsx": true },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "extends": [
+    "airbnb",
+    "plugin:import/typescript",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "react/jsx-filename-extension": [0, { "extensions": [".jsx", ".tsx"] }],
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-no-constructed-context-values": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/control-has-associated-label": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "no-empty-function": "off",
+    "@typescript-eslint/no-empty-function": ["off"],
+    "react/function-component-definition": [
+      0,
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": ["function-expression", "arrow-function"]
+      }
+    ]
+  }
+}
